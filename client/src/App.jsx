@@ -1,11 +1,14 @@
-import { Router, Route } from "react-router-dom"
+import { Routes, Route } from 'react-router-dom';
+import Header from "./components/header/Header"
 
 function App() {
   return (
     <div id="box">
-      <Router>
+      <Header />
 
-      </Router>
+      <Routes>
+
+      </Routes>
     </div >
   )
 }
