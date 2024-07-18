@@ -5,6 +5,7 @@ import Home from './components/home/Home';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import CreateGame from './components/games/CreateGame';
+import GameDetails from './components/games/GameDetails';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path='/auth/login' element={<Login />} />
         <Route path='/games' element={<GamesList />} />
         <Route path='/games/create-game' element={<CreateGame />} />
+        <Route path='/games/:gameId' element={<GameDetails />} />
       </Routes>
     </div >
   )

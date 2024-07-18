@@ -10,7 +10,7 @@ export default function GamesList() {
                     <img src="./images/avatar-1.jpg" />
                     <h6>Action</h6>
                     <h2>Cover Fire</h2>
-                    <Link to="" className="details-button">Details</Link>
+                    <Link to="/games/gameId" className="details-button">Details</Link>
                 </div>
 
             </div>
@@ -19,7 +19,7 @@ export default function GamesList() {
                     <img src="./images/avatar-1.jpg" />
                     <h6>Action</h6>
                     <h2>Zombie lang</h2>
-                    <Link to="" className="details-button">Details</Link>
+                    <Link to="/games/gameId" className="details-button">Details</Link>
                 </div>
 
             </div>
@@ -28,7 +28,7 @@ export default function GamesList() {
                     <img src="./images/avatar-1.jpg" />
                     <h6>Action</h6>
                     <h2>MineCraft</h2>
-                    <Link to="" className="details-button">Details</Link>
+                    <Link to="/games/gameId" className="details-button">Details</Link>
                 </div>
             </div>
 
