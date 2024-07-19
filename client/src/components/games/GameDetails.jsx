@@ -11,7 +11,7 @@ export default function GameDetails() {
     useEffect(() => {
         (async () => {
             const game = await getGameById(gameId);
-
+            
             setGame(game);
         })()
     }, []);

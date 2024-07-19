@@ -1,6 +1,17 @@
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getMostRecentGames } from "../../api/gamesAPI";
+import GameLatestItem from "../games/GameLatestItem";
 
 export default function Home() {
+    let [games, setGames] = useState([]);
+
+    useEffect(() => {
+        (async () => {
+            const newGames = await getMostRecentGames();
+            setGames(newGames);
+        })()
+    }, []);
+
     return (
         <section id="welcome-world">
 
@@ -13,43 +24,7 @@ export default function Home() {
             <div id="home-page">
                 <h1>Latest Games</h1>
 
-                {/* <!-- Display div: with information about every game (if any) --> */}
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="./images/CoverFire.png" />
-                    </div>
-                    <h3>Cover Fire</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <Link to="/games/gameId" className="btn details-btn">Details</Link>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="./images/ZombieLang.png" />
-                    </div>
-                    <h3>Zombie Lang</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <Link to="/games/gameId" className="btn details-btn">Details</Link>
-                    </div>
-                </div>
-                <div className="game">
-                    <div className="image-wrap">
-                        <img src="./images/MineCraft.png" />
-                    </div>
-                    <h3>MineCraft</h3>
-                    <div className="rating">
-                        <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
-                    </div>
-                    <div className="data-buttons">
-                        <Link to="/games/gameId" className="btn details-btn">Details</Link>
-                    </div>
-                </div>
+                {games.map(game => <GameLatestItem key={game._id} game={game} />)}
 
                 {/* <!-- Display paragraph: If there is no games  --> */}
                 <p className="no-articles">No games yet</p>

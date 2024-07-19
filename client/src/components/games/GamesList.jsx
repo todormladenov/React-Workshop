@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllGames } from "../../api/gamesAPI";
-import GameItem from "./GameItem";
+import GameListItem from "./GameListItem";
 
 export default function GamesList() {
     const [games, setGames] = useState([]);
@@ -16,7 +16,7 @@ export default function GamesList() {
         <section id="catalog-page">
             <h1>All Games</h1>
                 {games.length && games.map(game =>
-                    <GameItem
+                    <GameListItem
                         key={game._id}
                         game={game}
                     />)
