@@ -26,8 +26,7 @@ export default function Home() {
 
                 {games.map(game => <GameLatestItem key={game._id} game={game} />)}
 
-                {/* <!-- Display paragraph: If there is no games  --> */}
-                <p className="no-articles">No games yet</p>
+                {!games.length && <p className="no-articles">No games yet</p>}
             </div>
         </section>
     );
