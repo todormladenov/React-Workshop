@@ -1,17 +1,19 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { getGameById } from "../../api/gamesAPI";
+import { AuthContext } from "../../contexts/AuthContext";
 
 export default function GameDetails() {
     const [game, setGame] = useState({});
     const [comments, setComments] = useState([]);
+    const authContext = useContext(AuthContext);
 
     const { gameId } = useParams();
 
     useEffect(() => {
         (async () => {
             const game = await getGameById(gameId);
-            
+
             setGame(game);
         })()
     }, []);
@@ -43,20 +45,26 @@ export default function GameDetails() {
                     {!comments.length && <p className="no-comment">No comments.</p>}
 
                 </div>
-
-                <div className="buttons">
-                    <Link to={`/games/${game._id}/edit`} className="button">Edit</Link>
-                    <button className="button">Delete</button>
-                </div>
+                {
+                    authContext?.userId == game._ownerId
+                    &&
+                    <div className="buttons">
+                        <Link to={`/games/${game._id}/edit`} className="button">Edit</Link>
+                        <button className="button">Delete</button>
+                    </div>
+                }
             </div>
-
-            <article className="create-comment">
-                <label>Add new comment:</label>
-                <form className="form">
-                    <textarea name="comment" placeholder="Comment......"></textarea>
-                    <input className="btn submit" type="submit" value="Add Comment" />
-                </form>
-            </article>
+            {
+                authContext?.isAuth
+                    &&
+                <article className="create-comment">
+                    <label>Add new comment:</label>
+                    <form className="form">
+                        <textarea name="comment" placeholder="Comment......"></textarea>
+                        <input className="btn submit" type="submit" value="Add Comment" />
+                    </form>
+                </article>
+            }
 
         </section>
     );
