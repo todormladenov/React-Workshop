@@ -1,36 +1,33 @@
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../../api/authAPI";
+import { useForm } from "../../hooks/useForm";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+
+const initialValues = {
+    email: '',
+    password: ''
+}
 
 export default function Login() {
-    const [values, setValues] = useState({
-        email: '',
-        password: ''
-    });
     const navigator = useNavigate();
+    const authState = useContext(AuthContext)
 
-
-    const changeHandler = (e) => {
-        setValues(oldValues => ({
-            ...oldValues,
-            [e.target.name]: e.target.value
-        }));
-    }
-
-    const loginHandler = async (e) => {
-        e.preventDefault();
-
+    const loginHandler = async (values) => {
         try {
             const user = await login(values.email, values.password);
+            authState.setAuthState(user)
             navigator('/');
         } catch (error) {
             console.error(error.message) //TODO: Implement error handling.
         }
     }
 
+    const { values, changeHandler, submitHandler } = useForm(initialValues, loginHandler);
+
     return (
         <section id="login-page" className="auth">
-            <form id="login" onSubmit={loginHandler}>
+            <form id="login" onSubmit={submitHandler}>
 
                 <div className="container">
                     <div className="brand-logo"></div>
