@@ -1,12 +1,13 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { getGameById } from "../../api/gamesAPI";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { deleteGame, getGameById } from "../../api/gamesAPI";
 import { AuthContext } from "../../contexts/AuthContext";
 
 export default function GameDetails() {
     const [game, setGame] = useState({});
     const [comments, setComments] = useState([]);
     const authContext = useContext(AuthContext);
+    const navigator = useNavigate();
 
     const { gameId } = useParams();
 
@@ -17,6 +18,15 @@ export default function GameDetails() {
             setGame(game);
         })()
     }, []);
+
+    const deleteHandler = async () => {
+        try {
+            await deleteGame(gameId);
+            navigator('/games');
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     return (
         <section id="game-details">
@@ -50,7 +60,7 @@ export default function GameDetails() {
                     &&
                     <div className="buttons">
                         <Link to={`/games/${game._id}/edit`} className="button">Edit</Link>
-                        <button className="button">Delete</button>
+                        <button onClick={deleteHandler} className="button">Delete</button>
                     </div>
                 }
             </div>
