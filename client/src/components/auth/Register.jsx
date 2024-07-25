@@ -1,37 +1,35 @@
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../../api/authAPI";
-import { useState } from "react";
+import { useForm } from "../../hooks/useForm";
+import { useContext } from "react";
+import { AuthContext } from "../../contexts/AuthContext";
+
+const initialValues = {
+    email: '',
+    password: '',
+    'confirm-password': '',
+}
 
 export default function Register() {
-    const [values, setValues] = useState({
-        email: '',
-        password: '',
-        'confirm-password': '',
-    });
     const navigator = useNavigate();
+    const authContext = useContext(AuthContext);
 
-
-    const changeHandler = (e) => {
-        setValues(oldValues => ({
-            ...oldValues,
-            [e.target.name]: e.target.value
-        }));
-    }
-
-    const registerHandler = async (e) => {
-        e.preventDefault();
-
+    const registerHandler = async () => {
         try {
             const user = await register(values.email, values.password);
+            authContext.setAuthState(user);
+            
             navigator('/');
         } catch (error) {
             console.error(error.message) //TODO: Implement error handling.
         }
     }
 
+    const { values, changeHandler, submitHandler } = useForm(initialValues, registerHandler);
+
     return (
         <section id="register-page" className="content auth">
-            <form id="register" onSubmit={registerHandler}>
+            <form id="register" onSubmit={submitHandler}>
                 <div className="container">
                     <div className="brand-logo"></div>
                     <h1>Register</h1>
