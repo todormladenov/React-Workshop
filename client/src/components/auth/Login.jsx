@@ -16,7 +16,7 @@ export default function Login() {
     const loginHandler = async (values) => {
         try {
             const user = await login(values.email, values.password);
-            authState.setAuthState(user)
+            authState.changeAuthState(user)
             navigator('/');
         } catch (error) {
             console.error(error.message) //TODO: Implement error handling.

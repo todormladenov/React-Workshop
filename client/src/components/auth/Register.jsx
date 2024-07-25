@@ -17,8 +17,8 @@ export default function Register() {
     const registerHandler = async () => {
         try {
             const user = await register(values.email, values.password);
-            authContext.setAuthState(user);
-            
+            authContext.changeAuthState(user);
+
             navigator('/');
         } catch (error) {
             console.error(error.message) //TODO: Implement error handling.

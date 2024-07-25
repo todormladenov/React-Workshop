@@ -13,16 +13,22 @@ import { AuthContext } from './contexts/AuthContext';
 function App() {
   const [authState, setAuthState] = useState({})
 
+  const changeAuthState = (state) => {
+    sessionStorage.setItem('accessToken', state.accessToken);
+
+    setAuthState(state);
+  }
+
   const contextData = {
     email: authState.email,
     accessToken: authState.accessToken,
     isAuth: !!authState.accessToken,
     userId: authState._id,
-    setAuthState,
+    changeAuthState,
   }
 
   return (
-    <AuthContext.Provider value={contextData}>
+    <AuthContext.Provider value={contextData} >
       <div id="box">
         <Header />
 
@@ -36,7 +42,7 @@ function App() {
           <Route path='/games/:gameId/edit' element={<EditGame />} />
         </Routes>
       </div >
-    </AuthContext.Provider>
+    </AuthContext.Provider >
   )
 }
 

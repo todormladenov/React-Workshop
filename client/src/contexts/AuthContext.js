@@ -5,5 +5,5 @@ export const AuthContext = createContext({
     accessToken: '',
     isAuth: false,
     userId: '',
-    setAuthState: () => null,
+    changeAuthState: () => null,
 })
