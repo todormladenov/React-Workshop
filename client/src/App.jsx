@@ -7,22 +7,36 @@ import Login from './components/auth/Login';
 import CreateGame from './components/games/CreateGame';
 import GameDetails from './components/games/GameDetails';
 import EditGame from './components/games/EditGame';
+import { useState } from 'react';
+import { AuthContext } from './contexts/AuthContext';
 
 function App() {
-  return (
-    <div id="box">
-      <Header />
+  const [authState, setAuthState] = useState({})
 
-      <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/auth/register' element={<Register />} />
-        <Route path='/auth/login' element={<Login />} />
-        <Route path='/games' element={<GamesList />} />
-        <Route path='/games/create-game' element={<CreateGame />} />
-        <Route path='/games/:gameId' element={<GameDetails />} />
-        <Route path='/games/:gameId/edit' element={<EditGame />} />
-      </Routes>
-    </div >
+  const contextData = {
+    email: authState.email,
+    accessToken: authState.accessToken,
+    isAuth: !!authState.accessToken,
+    userId: authState._id,
+    setAuthState,
+  }
+
+  return (
+    <AuthContext.Provider value={contextData}>
+      <div id="box">
+        <Header />
+
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/auth/register' element={<Register />} />
+          <Route path='/auth/login' element={<Login />} />
+          <Route path='/games' element={<GamesList />} />
+          <Route path='/games/create-game' element={<CreateGame />} />
+          <Route path='/games/:gameId' element={<GameDetails />} />
+          <Route path='/games/:gameId/edit' element={<EditGame />} />
+        </Routes>
+      </div >
+    </AuthContext.Provider>
   )
 }
 
