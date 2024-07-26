@@ -2,22 +2,16 @@ import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { deleteGame, getGameById } from "../../api/gamesAPI";
 import { AuthContext } from "../../contexts/AuthContext";
+import { useGetOneGames } from "../../hooks/useGames";
 
 export default function GameDetails() {
-    const [game, setGame] = useState({});
-    const [comments, setComments] = useState([]);
-    const authContext = useContext(AuthContext);
     const navigator = useNavigate();
-
     const { gameId } = useParams();
 
-    useEffect(() => {
-        (async () => {
-            const game = await getGameById(gameId);
-
-            setGame(game);
-        })()
-    }, []);
+    const { game } = useGetOneGames(gameId);
+    const [comments, setComments] = useState([]);
+    
+    const authContext = useContext(AuthContext);
 
     const deleteHandler = async () => {
         try {
@@ -66,7 +60,7 @@ export default function GameDetails() {
             </div>
             {
                 authContext?.isAuth
-                    &&
+                &&
                 <article className="create-comment">
                     <label>Add new comment:</label>
                     <form className="form">

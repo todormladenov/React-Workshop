@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAllGames, getMostRecentGames } from "../api/gamesAPI";
+import { getAllGames, getMostRecentGames, getGameById } from "../api/gamesAPI";
 
 export const useGetAllGames = () => {
     const [games, setGames] = useState([]);
@@ -32,4 +32,21 @@ export const useGetMostRecentGames = () => {
         setGames
     }
 
+}
+
+export const useGetOneGames = (gameId) => {
+    const [game, setGame] = useState({});
+
+    useEffect(() => {
+        (async () => {
+            const game = await getGameById(gameId);
+
+            setGame(game);
+        })()
+    }, [gameId]);
+
+    return {
+        game,
+        setGame
+    }
 }
