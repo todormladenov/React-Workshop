@@ -1,16 +1,9 @@
-import { useEffect, useState } from "react";
-import { getMostRecentGames } from "../../api/gamesAPI";
+
+import { useGetMostRecentGames } from "../../hooks/useGames";
 import GameLatestItem from "../games/GameLatestItem";
 
 export default function Home() {
-    let [games, setGames] = useState([]);
-
-    useEffect(() => {
-        (async () => {
-            const newGames = await getMostRecentGames();
-            setGames(newGames);
-        })()
-    }, []);
+    const { games } = useGetMostRecentGames();
 
     return (
         <section id="welcome-world">
