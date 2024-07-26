@@ -14,7 +14,11 @@ function App() {
   const [authState, setAuthState] = useState({})
 
   const changeAuthState = (state) => {
-    sessionStorage.setItem('accessToken', state.accessToken);
+    if (state.accessToken) { 
+      sessionStorage.setItem('accessToken', state.accessToken);
+    } else {
+      sessionStorage.clear();
+    }
 
     setAuthState(state);
   }
